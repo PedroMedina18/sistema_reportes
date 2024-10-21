@@ -1,0 +1,91 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.bg-main {
+  background-color: rgb(241, 241, 241);
+}
+
+.w-80{
+  width: 80%;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .w-sm-25 {
+    width: 25% !important;
+  }
+
+  .w-sm-75 {
+    width: 75% !important;
+  }
+
+  .w-sm-50 {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .w-md-15 {
+    width: 15% !important;
+  }
+
+  .w-md-20 {
+    width: 20% !important;
+  }
+
+  
+
+  .w-md-30 {
+    width: 30% !important;
+  }
+
+  .w-md-35 {
+    width: 35% !important;
+  }
+
+  .w-md-40 {
+    width: 40% !important;
+  }
+
+  .w-md-45 {
+    width: 45% !important;
+  }
+
+  .w-md-50 {
+    width: 50% !important;
+  }
+
+  .w-md-60 {
+    width: 60% !important;
+  }
+
+  .w-md-80 {
+    width: 80% !important;
+  }
+  .w-md-90 {
+    width: 90% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .w-lg-25 {
+    width: 25% !important;
+  }
+
+  .w-lg-50 {
+    width: 50% !important;
+  }
+
+  .w-lg-30 {
+    width: 30% !important;
+  }
+
+  .w-lg-75 {
+    width: 75% !important;
+  }
+}
