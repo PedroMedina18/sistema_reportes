@@ -1,0 +1,8 @@
+.dropdown-menu.bg-success .dropdown-item:hover{
+    background-color: var(--bs-success-text-emphasis);
+}
+
+.dropdown-menu.bg-success .dropdown-item.active{
+    background-color: var(--bs-success-text-emphasis);
+    font-weight: bold;
+}

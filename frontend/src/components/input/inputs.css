@@ -1,0 +1,8 @@
+.form-control, .form-check-input{
+    --bs-border-width:2px;
+    --bs-border-color:rgb(120, 120, 120)
+}
+input{
+    height: auto;
+    /* background-color: rgb(63, 63, 63); */
+}
