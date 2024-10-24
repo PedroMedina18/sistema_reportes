@@ -41,7 +41,7 @@ export async function putTypeReport(req, res) {
         const id = Number(req.params.id) || 0;
         const { name, description } = req.body;
         if(id<=0){
-            return res.status(404).json({ message: `${table.table}. No encontrado`, status: false });
+            return res.status(401).json({ message: `${table.table}. Invalido`, status: false });
         };
 
         const {rowCount, rows} = await pool.query("SELECT * FROM reports_type WHERE id=$1", [
@@ -84,9 +84,15 @@ export async function putTypeReport(req, res) {
 export async function deleteTypeReport(req, res) {
     try {
         const id = Number(req.params.id);
+
+        if(id<=0){
+            return res.status(401).json({ message: `${table.table}. Invalido`, status: false });
+        };
+
         const { rowCount } = await pool.query("DELETE FROM reports_type where id = $1", [
             id,
         ]);
+        
         if (rowCount === 0) {
             return res.status(404).json({ message: `${table.table}. No encontrado`, status: false });
         };

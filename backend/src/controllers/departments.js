@@ -27,13 +27,13 @@ export async function postDepartment(req, res) {
         };
         // * ----------------------------------------------------------------------------------------------
         
-        const reponse = await pool.query(
+        const create = await pool.query(
             "INSERT INTO departments (name, description) VALUES ($1, $2) RETURNING *",
             [validName.result, validDescription.result]
         );
 
 
-        return res.status(201).json({ message: `${table.table}. Creado`, id: reponse.rows[0].id, status: true });
+        return res.status(201).json({ message: `${table.table}. Creado`, id: create.rows[0].id, status: true });
     } catch (error) {
         const routeError = new ErrorRoute(error, table).typeError();
         return res.status(routeError.code).json({ error: routeError.message, status: false });
@@ -44,8 +44,9 @@ export async function putDepartment(req, res) {
     try {
         const id = Number(req.params.id) || 0;
         const { name, description } = req.body;
+        
         if(id<=0){
-            return res.status(404).json({ message: `${table.table}. No encontrado`, status: false });
+            return res.status(401).json({ message: `${table.table}. Invalido`, status: false });
         };
 
         const {rowCount, rows} = await pool.query("SELECT * FROM departments WHERE id=$1", [
@@ -88,6 +89,11 @@ export async function putDepartment(req, res) {
 export async function deleteDepartment(req, res) {
     try {
         const id = Number(req.params.id);
+
+        if(id<=0){
+            return res.status(401).json({ message: `${table.table}. Invalido`, status: false });
+        };
+
         const { rowCount } = await pool.query("DELETE FROM departments where id = $1", [
             id,
         ]);
