@@ -12,8 +12,8 @@ export function createToken(user) {
     
 
     const token = jwt.sign(payload, secretKey, { expiresIn: '10h' });
-    return token
-}
+    return token;
+};
 
 export function verifyToken(token) {
     jwt.verify(token, secretKey, (err, decoded) => {
@@ -22,6 +22,6 @@ export function verifyToken(token) {
             return {status:false, message:err.message};
         } else {
             return {status:true, data:{...decoded}};
-        }
+        };
     });
-}
+};

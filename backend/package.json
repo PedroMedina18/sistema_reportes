@@ -7,16 +7,19 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch --env-file .env src/index.js",
-    "migrate": "node --env-file .env database/execute.js"
+    "migrate": "node --env-file .env database/execute.js",
+    "key": "node src/security/createKey.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "colors": "^1.4.0",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "pg": "^8.13.0"
+    "pg": "^8.13.0",
+    "readline-sync": "^1.4.10"
   }
 }

@@ -2,7 +2,7 @@ import express from "express";
 import usersRoutes from "./routes/routes.js";
 import morgan from "morgan";
 import config from "./config.js";
-import { pool} from "./db.js";
+import { pool } from "./db.js";
 
 const app = express();
 

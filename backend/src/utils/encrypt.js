@@ -9,7 +9,7 @@ export async function encryptPassword(password) {
     return hashedPassword;
 }
 
-export async function verifyPassword(enteredPassword, storedHashedPassword) {
-    const isMatch = await bcrypt.compare(enteredPassword, storedHashedPassword);
+export async function verifyPassword(enteredPassword, storedPassword) {
+    const isMatch = await bcrypt.compare(enteredPassword, storedPassword);
     return isMatch; // Devuelve true si coincide, false si no
 }

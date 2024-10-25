@@ -3,6 +3,7 @@ const pattern={
     textWithNumber:/^[a-zA-ZÁ-ÿ0-9.,\s]+$/,
     names:/^[a-zA-ZÁ-ÿ]+$/,
     password:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[.,_&%$#!+*-])[A-Za-z\d.,_&%$#!+*-]{8,20}$/,
+    passwordSecurity:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[.,_&%$#!+*-])[A-Za-z\d.,_&%$#!+*-]{10,50}$/,
     userName:/^[A-Za-z\d]{5,25}$/,
 }
 
