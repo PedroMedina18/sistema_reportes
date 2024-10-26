@@ -1,5 +1,6 @@
 import readline from "readline"
 import readlineSync from "readline-sync"
+import * as colors from "colors";
 // Crear una interfaz para leer datos de la consol a
 
 export function outputLine(message) {
@@ -19,17 +20,26 @@ export function outputLine(message) {
 }
 
 
-export function outputLinePassword(message) {
+export function outputLineNewPassword(message) {
     return new Promise(resolve => {
         const password = readlineSync.questionNewPassword(message, {
             hideEchoBack: true,
             min:8,
             max:30,
-            limit: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[.,_&%$#!+*-])[A-Za-z\d.,_&%$#!+*-]$/,
-            encoding:"UT",
-            limitMessage: 'La clave no es válida. Debe tener entre 8 y 30 caracteres, incluir al menos una letra mayúscula, una minúscula, un número y alguno de los siguientes signos (. , _ & % $ # ! + * -). Intenta de nuevo',
-            confirmMessage:"Confirmar clave",
-            unmatchMessage:"Se diferencia de la primera. Presione solo la tecla Enter si desea volver a intentarlo desde el principio."
+            charlist:"$<a-z> $<A-Z> $<0-9> $<.,_&%$#!+*->",
+            encoding:"UTF-8",
+            limitMessage: 'La clave no es valida. Debe tener entre 8 y 30 caracteres,\nse aceptan caracteres de <a-z>, <A-Z>, <0-9> y los siguientes signos (. , _ & % $ # ! + * -). Intenta de nuevo'.yellow,
+            confirmMessage:"Confirmar clave".green,
+            unmatchMessage:"Se diferencia de la primera. Presione solo la tecla Enter si desea volver a intentarlo desde el principio.".yellow
+        });
+        resolve(password);
+    })
+}
+
+export function outputLinePassword(message) {
+    return new Promise(resolve => {
+        const password = readlineSync.question(message, {
+            hideEchoBack: true,
         });
         resolve(password);
     })

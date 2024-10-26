@@ -21,7 +21,7 @@ CREATE TABLE users (
     names VARCHAR(200) NOT NULL,
     last_names VARCHAR(200) NOT NULL,
     user_name VARCHAR(25) NOT NULL UNIQUE,
-    password VARCHAR(300) NOT NULL,
+    password VARCHAR(150) NOT NULL,
     administrator BOOLEAN NOT NULL DEFAULT FALSE,
     department_id INTEGER  NOT NULL,
     email_id INTEGER  NOT NULL,

@@ -8,7 +8,8 @@
     "start": "node src/index.js",
     "dev": "node --watch --env-file .env src/index.js",
     "migrate": "node --env-file .env database/execute.js",
-    "key": "node src/security/createKey.js"
+    "key": "node src/security/createKey.js",
+    "newuser": "node src/security/createUser.js"
   },
   "keywords": [],
   "author": "",

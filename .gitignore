@@ -13,6 +13,7 @@ lerna-debug.log*
 *.local
 
 /help
+*key.txt
 
 # Editor directories and files
 .vscode/*

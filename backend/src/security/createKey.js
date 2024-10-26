@@ -1,46 +1,55 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
 import { encryptPassword } from "../utils/encrypt.js";
-import { outputLine, outputLinePassword } from "../utils/outputLine.js";
+import { outputLine, outputLineNewPassword } from "../utils/outputLine.js";
 import pattern from "../utils/pattern.js";
 import readlineSync from "readline-sync";
 import * as colors from "colors";
 
-// Define la clave y el valor
-const clave = 'KEY';
-let key
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+let linea
+crearKey()
 
-if (readlineSync.keyInYN('¿Deseas cambiar la clave de seguridad?')) {
 
-    // do {
-    //     key = await neddPassword()
-    // } while (!key);
-    neddPassword()
-    // const linea = `${clave}: ${valor}\n`;
-    // console.log(linea)
 
-} else {
-    console.log('Operación cancelada.'.red);
-}
+async function crearKey() {
+    if (readlineSync.keyInYN('¿Deseas cambiar la clave de seguridad?')) {
+        const password = await neddPassword();
+        if (!password) return;
+
+        linea = `KEY=${password}\n`;
+        guardarKey();
+    } else {
+        console.log('Operacion cancelada.'.red);
+    };
+};
 
 async function neddPassword() {
-    const password = await outputLinePassword("Nueva clave: ");
-    console.log(password)
-    // const passwordEncry = await encryptPassword(password);
-    // return passwordEncry
-}
+    try {
 
-// // Crea la línea de clave-valor
-// const linea = `${clave}: ${valor}\n`;
+        const password = await outputLineNewPassword("Nueva clave: ".green);
+        console.log("Espere...".green)
+        const passwordEncry = await encryptPassword(password);
+        return passwordEncry;
+    } catch {
+        console.log("error vuelva a intentar".red)
+        return null;
+    }
+};
 
-// // Define la ruta donde se guardará el archivo
-// const rutaArchivo = path.join(__dirname, 'datos', 'archivo.txt');
+function guardarKey() {
+    // Define la ruta donde se guardará el archivo
+    const rutaArchivo = path.join(__dirname, 'key.txt');
 
-// // Escribe la línea en el archivo .txt
-// fs.writeFile(rutaArchivo, linea, (err) => {
-//     if (err) {
-//         console.error('Error al crear el archivo:', err);
-//     } else {
-//         console.log('Archivo creado exitosamente en:', rutaArchivo);
-//     }
-// });
+    // Escribe la línea en el archivo .txt
+    fs.writeFile(rutaArchivo, linea, (err) => {
+        if (err) {
+            console.error(`Error al crear el archivo: ${err}`.red);
+        } else {
+            console.log('clave creada exitosamente'.green);
+        }
+    });
+};
+
