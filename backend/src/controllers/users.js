@@ -2,8 +2,8 @@ import pattern from "../utils/pattern.js";
 import Text from "../class/Text.js";
 import Forenkey from "../class/Forenkey.js";
 import Booleano from "../class/Booleano.js";
-import { encryptPassword } from "../utils/encrypt.js";
 import ErrorRoute from "../class/ErrorRoute.js";
+import { encryptPassword } from "../utils/encrypt.js";
 
 const table = {
     table: "Usuario",
@@ -97,7 +97,7 @@ export async function postUser(req, res) {
             ]
         );
         return res.status(201).json({ message: `${table.table}. Creado`, id: reponse.rows[0].id, status: true });
-    } catch {
+    } catch (error){
         const routeError = new ErrorRoute(error, table).typeError();
         return res.status(routeError.code).json({ error: routeError.message, status: false });
     }
@@ -194,7 +194,7 @@ export async function putUser(req, res) {
             ]
         );
         return res.status(200).json({ message: `${table.table}. Actualizado`, id: update.rows[0].id, status: true });
-    } catch {
+    } catch (error){
         const routeError = new ErrorRoute(error, table).typeError();
         return res.status(routeError.code).json({ error: routeError.message, status: false });
     }

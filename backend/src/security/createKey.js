@@ -10,7 +10,10 @@ import * as colors from "colors";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 let linea
-crearKey()
+process.on('SIGINT', () => {
+    console.log('Deteniendo el programa...');
+    process.exit(0); // Salir del programa con un código de estado 0 (sin errores)
+});
 
 
 
@@ -18,7 +21,6 @@ async function crearKey() {
     if (readlineSync.keyInYN('¿Deseas cambiar la clave de seguridad?')) {
         const password = await neddPassword();
         if (!password) return;
-
         linea = `KEY=${password}\n`;
         guardarKey();
     } else {
@@ -28,7 +30,6 @@ async function crearKey() {
 
 async function neddPassword() {
     try {
-
         const password = await outputLineNewPassword("Nueva clave: ".green);
         console.log("Espere...".green)
         const passwordEncry = await encryptPassword(password);
@@ -53,3 +54,10 @@ function guardarKey() {
     });
 };
 
+
+
+crearKey().then(result => {
+    console.log("result");
+}).catch(err => {
+    console.error(err);
+});

@@ -52,3 +52,14 @@ CREATE TABLE reports (
     CONSTRAINT fk_user_completed FOREIGN KEY (user_completed_id) REFERENCES users(id) ON DELETE RESTRICT,
     CONSTRAINT fk_report_type FOREIGN KEY (report_type_id) REFERENCES reports_type(id) ON DELETE RESTRICT
 );
+
+
+
+INSERT INTO emails (email) VALUES ('sistemas1.plazabolivar@locatelve.com');
+
+INSERT INTO departments (name, description) 
+VALUES 
+('Sistemas', 'Departamento de Sistemas'),
+('RRHH', 'Departamento de RRHH'),
+('Farmacia', 'Departamento de Farmacia'),
+('Contabilidad', 'Departamento de Contabilidad');
