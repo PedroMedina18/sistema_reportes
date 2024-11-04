@@ -1,3 +1,4 @@
+import { pool } from "../db.js";
 import pattern from "../utils/pattern.js";
 import Text from "../class/Text.js";
 import ErrorRoute from "../class/ErrorRoute.js";

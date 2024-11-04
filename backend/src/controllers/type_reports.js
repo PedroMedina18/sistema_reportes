@@ -1,7 +1,7 @@
+import { pool } from "../db.js"; 
 import pattern from "../utils/pattern.js";
-import Text from "../class/Text.js";
 import ErrorRoute from "../class/ErrorRoute.js";
-
+import Text from "../class/Text.js";
 const table = {
     table: "Tipo de Reporte",
     id: "ID",

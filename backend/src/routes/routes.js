@@ -12,9 +12,10 @@ router.post("/emails/", emails.postEmail);
 router.put("/emails/:id/", emails.putEmail);
 router.delete("/emails/:id/", emails.deleteEmail);
 
-router.get("/users/", users.getUser);
-router.get("/users/:id/", users.getUser);
+// router.get("/users/", users.getUser);
+// router.get("/users/:id/", users.getUser);
 router.post("/users/", users.postUser);
+router.post("/password/:id/", users.editPassword);
 router.put("/users/:id/", users.putUser);
 router.delete("/users/:id/", users.deleteUser);
 

@@ -3,6 +3,7 @@ import usersRoutes from "./routes/routes.js";
 import morgan from "morgan";
 import config from "./config.js";
 import { pool } from "./db.js";
+import * as colors from "colors";
 
 const app = express();
 
@@ -19,4 +20,4 @@ app.use(usersRoutes);
 
 app.listen(config.PORT);
 
-console.log("Server on port", config.PORT);
+console.log(`Server on port: ${config.PORT}`.yellow );

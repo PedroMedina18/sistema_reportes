@@ -3,6 +3,7 @@ import Text from "../class/Text.js";
 import Forenkey from "../class/Forenkey.js";
 import Booleano from "../class/Booleano.js";
 import ErrorRoute from "../class/ErrorRoute.js";
+import { pool } from "../db.js";
 import { encryptPassword } from "../utils/encrypt.js";
 
 const table = {
@@ -22,7 +23,6 @@ const table = {
 
 export async function postUser(req, res) {
     try {
-
         const {
             names,
             last_names,
@@ -198,7 +198,6 @@ export async function putUser(req, res) {
         const routeError = new ErrorRoute(error, table).typeError();
         return res.status(routeError.code).json({ error: routeError.message, status: false });
     }
-
 }
 
 export async function deleteUser(req, res) {
@@ -244,7 +243,6 @@ export async function editPassword(req, res) {
             return res.status(404).json({ message: `${table.table}. No encontrado`, status: false });
         };
 
-
         const validPassword = new Text({ text: password, minLenght: 8, maxLenght: 20, pattern: pattern.password }).validar();
 
         if (!validPassword.status) {
@@ -253,16 +251,14 @@ export async function editPassword(req, res) {
 
         const encrypPassword = await encryptPassword(validPassword.result)
 
-        const {update} = await pool.query(
+        const update = await pool.query(
             "UPDATE users SET password=$1 WHERE id = $2 RETURNING *",
             [
                 encrypPassword,
                 id
             ]
         );
-
         return res.status(200).json({ message: `Cambio de contraseña completado`, id: update.rows[0].id, status: true });
-
 
     } catch (error) {
         const routeError = new ErrorRoute(error, table).typeError();
@@ -298,7 +294,7 @@ export async function editnameUser(req, res) {
         };
         
 
-        const {update} = await pool.query(
+        const update = await pool.query(
             "UPDATE users SET user_name=$1 WHERE id = $2 RETURNING *",
             [
                 validUserName.result,
@@ -341,9 +337,8 @@ export async function editState(req, res) {
         if (!validState.status) {
             return res.status(validState.code).json({ message: `${table.state}. ${validState.message}`, status: false });
         };
-        
 
-        const {update} = await pool.query(
+        const update = await pool.query(
             "UPDATE users SET state=$1 WHERE id = $2 RETURNING *",
             [
                 validState.result,

@@ -32,12 +32,15 @@ async function comprobarKey() {
         if (!passwordEncry) return
         const password = await outputLinePassword("Clave secreta: ".green)
         if (await verifyPassword(password, passwordEncry)) {
+            console.log("Datos del nuevo usuario".yellow)
             createUser()
         } else {
-            console.log('¿Clave incorrecta. Operacion cancelada?')
+            console.log('Clave incorrecta. Operacion cancelada'.red)
+            process.exit()
         }
     } else {
         console.log('Operacion cancelada.'.red);
+        process.exit()
     };
 }
 
@@ -67,10 +70,10 @@ async function createUser() {
         } while (!user);
 
 
-        const email = await pool.query(`SELECT id FROM email ORDER BY id LIMIT 1;`);
-        const department = await pool.query(`SELECT id FROM department ORDER BY id LIMIT 1;`);
+        const email = await pool.query(`SELECT id FROM emails ORDER BY id LIMIT 1;`);
+        const department = await pool.query(`SELECT id FROM departments ORDER BY id LIMIT 1;`);
 
-        password = await outputLineNewPassword("Contraseña: ".green);
+        password = await outputLineNewPassword("Clave: ".green);
         console.log("Espere...".green)
         const passwordEncry = await encryptPassword(password);
         const reponse = await pool.query(
@@ -86,7 +89,9 @@ async function createUser() {
                 true
             ]
         );
-        console.log("Super usuario creador".green)
+        console.log("Super usuario creado".green)
+        return
+
     } catch (error){
         const routeError = new ErrorRoute(error, table).typeError();
         console.log(routeError.message.red)

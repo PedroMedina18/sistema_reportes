@@ -9,7 +9,7 @@
     "dev": "node --watch --env-file .env src/index.js",
     "migrate": "node --env-file .env database/execute.js",
     "key": "node src/security/createKey.js",
-    "newuser": "node src/security/createUser.js"
+    "newuser": "node --env-file .env src/security/createUser.js"
   },
   "keywords": [],
   "author": "",

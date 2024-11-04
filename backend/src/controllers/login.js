@@ -6,7 +6,19 @@ import Forenkey from "../class/Forenkey.js";
 import ErrorRoute from "../class/ErrorRoute.js";
 import { createToken } from "../utils/token.js";
 import { verifyPassword } from "../utils/encrypt.js";
-
+const table = {
+    table: "Usuario",
+    id: "ID",
+    names: "Nombres",
+    last_names: "Apellidos",
+    user_name: "Nombre de Usuario",
+    password: "Contraseña",
+    administrator: "Administrador",
+    department: "Departamento",
+    email: "Correo Electronico",
+    subsidiary: "Subcursal",
+    state: "Estado"
+};
 
 export async function login(req, res) {
     try {
@@ -31,8 +43,8 @@ export async function login(req, res) {
             };
         };
 
-        const { row, rowCount } = await pool.query(
-            "SELECT id, administrador, state, password, user_name FROM users WHERE user_name=$1 AND state=true",
+        const { rows, rowCount } = await pool.query(
+            "SELECT id, administrator, state, password, user_name FROM users WHERE user_name=$1 AND state=true",
             [
                 validUserName.result
             ]
@@ -41,19 +53,18 @@ export async function login(req, res) {
         if (rowCount === 0){
             return res.status(401).json({ message: `Usuario o contraseña equivocado. Por favor Verifique`, status: false });
         };
-
-        const isPassword = await verifyPassword(password, row[0].password);
+        const isPassword = await verifyPassword(password, rows[0].password);
 
         if (!isPassword){
             return res.status(401).json({ message: `Usuario o contraseña equivocado. Por favor Verifique`, status: false });
         };
 
-        const newToken = createToken(row[0]);
+        const newToken = createToken(rows[0]);
 
         return res.status(200).json({ 
             message: `Login completado`, 
             token:newToken, 
-            user:row[0].user_name, 
+            user:rows[0].user_name, 
             status: true 
         });
 
@@ -61,7 +72,6 @@ export async function login(req, res) {
         const routeError = new ErrorRoute(error, table).typeError();
         return res.status(routeError.code).json({ error: routeError.message, status: false });
     };
-
 };
 
 export async function seccionActive(req, res) {
