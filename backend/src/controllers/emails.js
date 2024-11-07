@@ -3,6 +3,7 @@ import message from "../utils/message.js";
 import pattern from "../utils/pattern.js";
 import Text from "../class/Text.js";
 import ErrorRoute from "../class/ErrorRoute.js";
+import VerifyRequest from "../class/Verify.js";
 
 const table = {
     table: "Correo Electrónico",
@@ -98,9 +99,14 @@ export async function deleteEmail(req, res) {
 
 export async function getEmail(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const response = await pool.query("SELECT * FROM emails ORDER BY id ASC");
         return res.status(200).json(response.rows);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        const routeError = new ErrorRoute(error, table).typeError();
+        return res.status(routeError.code).json({ error: routeError.message, status: false });
     };
 };

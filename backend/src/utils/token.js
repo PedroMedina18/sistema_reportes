@@ -3,25 +3,25 @@ import jwt from "jsonwebtoken"
 const secretKey = config.TOKEN;
 
 export function createToken(user) {
+
     const payload = {
         id: user.id,
         state: user.state,
-        administrador: user.administrador,
+        administrator: user.administrator,
     };
 
-    
-
-    const token = jwt.sign(payload, secretKey, { expiresIn: '10h' });
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1min' });
     return token;
 };
 
 export function verifyToken(token) {
-    jwt.verify(token, secretKey, (err, decoded) => {
+    return jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
-            console.log(err)
             return {status:false, message:err.message};
         } else {
             return {status:true, data:{...decoded}};
         };
     });
+
 };
+

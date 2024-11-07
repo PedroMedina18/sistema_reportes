@@ -15,7 +15,6 @@ class ErrorRoute {
                 message: `Campo ${this.table[match[1]]}. Duplicado`
             }
         }
-        console.log(this.error)
         return {
             code: 500,
             message: this.message

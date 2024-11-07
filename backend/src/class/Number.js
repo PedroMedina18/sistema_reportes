@@ -67,7 +67,6 @@ class Number {
             }
 
         } catch {
-            console.log(error)
             return {
                 message: `Error Desconocido`,
                 code: 500,
