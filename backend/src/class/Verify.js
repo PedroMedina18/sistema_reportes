@@ -1,9 +1,10 @@
 import message from "../utils/message.js"
 import { verifyToken } from "../utils/token.js"
 export default class VerifyRequest {
-    constructor(req, admin = false) {
+    constructor(req, admin = false, permiseId=0) {
         this.request = req
         this.admin = admin
+        this.permiseId = Number(permiseId)
     }
 
     tokenVerify() {
@@ -19,6 +20,7 @@ export default class VerifyRequest {
                     message: data.message
                 }
             }
+
             if (!data.data.state) {
                 return {
                     state: false,
@@ -26,13 +28,23 @@ export default class VerifyRequest {
                     message: "Acceso Restringido. Usted esta desautorizado"
                 }
             }
-            if (admin && !data.data.administrator) {
+
+            if (this.admin && !data.data.administrator) {
                 return {
                     state: false,
                     code: 403,
-                    message: "Sin autorización para acceder"
+                    message: "Sin autorización"
                 }
             }
+
+            if(this.permiseId && this.permiseId !== data.data.id){
+                return {
+                    state: false,
+                    code: 403,
+                    message: "Sin autorización"
+                }
+            }
+
             return {
                 state: true,
                 code: 200,

@@ -2,6 +2,8 @@ import { pool } from "../db.js";
 import pattern from "../utils/pattern.js";
 import ErrorRoute from "../class/ErrorRoute.js";
 import Text from "../class/Text.js";
+import VerifyRequest from "../class/Verify.js"
+
 const table = {
     table: "Tipo de Reporte",
     id: "ID",
@@ -11,6 +13,11 @@ const table = {
 
 export async function postTypeReport(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
+
         const { name, description } = req.body;
 
         const validName = new Text({text: name, minLenght: 3, maxLenght: 200, pattern: pattern.textWithNumber}).validar();
@@ -38,6 +45,10 @@ export async function postTypeReport(req, res) {
 
 export async function putTypeReport(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const id = Number(req.params.id) || 0;
         const { name, description } = req.body;
         if(id<=0){
@@ -83,6 +94,10 @@ export async function putTypeReport(req, res) {
 
 export async function deleteTypeReport(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const id = Number(req.params.id);
 
         if(id<=0){

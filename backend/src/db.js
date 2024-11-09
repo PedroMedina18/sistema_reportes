@@ -9,6 +9,3 @@ export const pool = new pg.Pool({
   password: config.DB_PASSWORD,
   port: config.DB_PORT,
 });
-
-
-

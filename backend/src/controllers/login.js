@@ -6,6 +6,7 @@ import Forenkey from "../class/Forenkey.js";
 import ErrorRoute from "../class/ErrorRoute.js";
 import { createToken } from "../utils/token.js";
 import { verifyPassword } from "../utils/encrypt.js";
+
 const table = {
     table: "Usuario",
     id: "ID",

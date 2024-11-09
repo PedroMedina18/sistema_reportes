@@ -13,6 +13,10 @@ const table = {
 
 export async function postEmail(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const { email } = req.body;
 
         const validEmail = new Text({text:email, pattern: pattern.email}).validar();
@@ -35,6 +39,10 @@ export async function postEmail(req, res) {
 
 export async function putEmail(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const id = Number(req.params.id) || 0;
         const { email } = req.body;
 
@@ -75,6 +83,11 @@ export async function putEmail(req, res) {
 
 export async function deleteEmail(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
+
         const id = Number(req.params.id);
 
         if(id<=0){
@@ -99,7 +112,7 @@ export async function deleteEmail(req, res) {
 
 export async function getEmail(req, res) {
     try {
-        const verify = new VerifyRequest(req, true).tokenVerify()
+        const verify = new VerifyRequest(req, false).tokenVerify()
         if (!verify.status) {
             return res.status(verify.code).json({ message: verify.message, status: false });
         };

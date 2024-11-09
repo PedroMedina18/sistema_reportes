@@ -5,6 +5,7 @@ import Text from "../class/Text.js";
 import Forenkey from "../class/Forenkey.js";
 import ErrorRoute from "../class/ErrorRoute.js";
 import {verifyToken} from "../utils/token.js";
+import VerifyRequest from "../class/Verify.js";
 
 const table = {
     table: "Reporte",
@@ -20,6 +21,10 @@ const table = {
 
 export async function postReport(req, res){
     try {
+        const verify = new VerifyRequest(req, false).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const { 
             report_type,
             description,

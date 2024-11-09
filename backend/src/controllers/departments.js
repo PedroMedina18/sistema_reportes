@@ -2,6 +2,7 @@ import { pool } from "../db.js";
 import pattern from "../utils/pattern.js";
 import Text from "../class/Text.js";
 import ErrorRoute from "../class/ErrorRoute.js";
+import VerifyRequest from "../class/Verify.js"
 
 const table = {
     table: "Departamento",
@@ -12,6 +13,10 @@ const table = {
 
 export async function postDepartment(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const { name, description } = req.body;
 
         // * ----------------------- Validacion------------------------------------------------------------
@@ -43,6 +48,10 @@ export async function postDepartment(req, res) {
 
 export async function putDepartment(req, res) {
     try {
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
         const id = Number(req.params.id) || 0;
         const { name, description } = req.body;
         
@@ -89,6 +98,12 @@ export async function putDepartment(req, res) {
 
 export async function deleteDepartment(req, res) {
     try {
+        
+        const verify = new VerifyRequest(req, true).tokenVerify()
+        if (!verify.status) {
+            return res.status(verify.code).json({ message: verify.message, status: false });
+        };
+
         const id = Number(req.params.id);
 
         if(id<=0){

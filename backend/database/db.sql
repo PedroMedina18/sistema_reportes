@@ -45,6 +45,7 @@ CREATE TABLE reports (
     user_completed_id INTEGER DEFAULT NULL,
     report_type_id INTEGER  NOT NULL,
     description VARCHAR(1000) NOT NULL,
+    comentario_completed VARCHAR(1000) NULL,
     state BOOLEAN NOT NULL DEFAULT FALSE,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     completed TIMESTAMP DEFAULT NULL,
@@ -53,7 +54,13 @@ CREATE TABLE reports (
     CONSTRAINT fk_report_type FOREIGN KEY (report_type_id) REFERENCES reports_type(id) ON DELETE RESTRICT
 );
 
-
+DROP TABLE IF EXISTS imgs_reports;
+CREATE TABLE reports (
+    id SERIAL PRIMARY KEY,
+    url TEXT NOT NULL UNIQUE,
+    reports_id INTEGER NOT NULL,
+    CONSTRAINT fk_reports FOREIGN KEY (reports_id) REFERENCES reports(id) ON DELETE RESTRICT,
+);
 
 INSERT INTO emails (email) VALUES ('sistemas1.plazabolivar@locatelve.com');
 
